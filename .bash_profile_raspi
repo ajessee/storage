@@ -1,0 +1,32 @@
+ 
+# echo is like puts for bash (bash is the program running in your terminal)
+echo -e "\nWelcome to your Raspberry Pi. Happy Hacking.\n" 
+
+# $VARIABLE will render before the rest of the command is executed
+echo -e "You are logged in as $USER@$(hostname)\n"
+
+# Path for pyenv
+test -d "$HOME/.pyenv/" && PATH="$HOME/.pyenv/bin:$PATH"
+
+# pyenv enable shims and autocompletion
+if command -v pyenv 1>/dev/null 2>&1; then
+  echo "Initializing pyenv"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+
+fi
+
+# Path for rbenv
+test -d "$HOME/.rbenv/" && PATH="$HOME/.rbenv/bin:$PATH"
+
+if which rbenv > /dev/null; then
+  echo "Initializing rbenv"
+  eval "$(rbenv init -)" 
+  # $(rbenv init -) adds the shim directory at the beginning of your PATH (https://github.com/rbenv/rbenv#understanding-shims)
+fi
+
+# setup nvm
+echo "Initializing nvm"
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
